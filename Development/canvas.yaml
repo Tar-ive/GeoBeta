@@ -1,0 +1,19 @@
+id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+name: GeoBeta-2
+project_id: 2536eee7-9e24-45dc-83a8-e249ed961fe3
+global_imports: []
+python_global_imports: ''
+r_global_imports: ''
+requirements: []
+linux_packages: []
+environment_variables: []
+is_public: false
+organization_id: a6f6421d-8865-4fe7-aa81-1fc2b3352de7
+layers:
+- blocks: []
+  canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+  edges: []
+  id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+  name: Development
+  type: 1
+assets: []
