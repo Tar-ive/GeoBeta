@@ -1,0 +1,144 @@
+canvas:
+  id: geoabeta-canvas
+  name: GeoBeta
+  description: Geopolitical Risk Intelligence - S&P 500 tariff exposure analysis
+
+global_imports: []
+
+layers:
+  - id: development
+    name: Development
+    compute_type: standard
+    memory: 4gb
+
+edges:
+  # Pipeline A: EDGAR + Exposure Scoring
+  - from: A1
+    to: A2
+  - from: A2
+    to: A3
+  - from: A3
+    to: A4
+  - from: A4
+    to: A5
+
+  # Pipeline B: Stock Prices
+  - from: A1
+    to: B1
+  - from: B1
+    to: B3
+
+  # Pipeline C: GDELT Events
+  - from: C1
+    to: C2
+
+  # Pipeline D: Prediction Markets
+  - from: D1
+    to: D3
+  - from: D2
+    to: D3
+
+  # Pipeline E: FRED Macro
+  - from: E1
+    to: E2
+
+  # Pipeline F: Backtest
+  - from: E2
+    to: F
+  - from: B1
+    to: F
+
+  # Pipeline G: Escalation Index
+  - from: A5
+    to: G1
+  - from: D3
+    to: G1
+  - from: C1
+    to: G1
+  - from: E1
+    to: G1
+  - from: G1
+    to: G2
+
+blocks:
+  - id: A1
+    type: python
+    file: Development/A1_tickers.py
+    outputs: [tickers_df]
+  - id: A2
+    type: python
+    file: Development/A2_edgar.py
+    inputs: [tickers_df]
+    outputs: [raw_filings_df]
+  - id: A3
+    type: python
+    file: Development/A3_chunker.py
+    inputs: [raw_filings_df]
+    outputs: [filtered_chunks_df]
+  - id: A4
+    type: genai
+    file: Development/A4_extractor.py
+    inputs: [filtered_chunks_df]
+    outputs: [extracted_df]
+    model: claude-sonnet-4-6
+  - id: A5
+    type: python
+    file: Development/A5_scorer.py
+    inputs: [filtered_chunks_df, extracted_df]
+    outputs: [scored_df]
+  - id: B1
+    type: python
+    file: Development/B1_prices.py
+    inputs: [tickers_df]
+    outputs: [prices_df]
+  - id: B3
+    type: python
+    file: Development/B3_reaction.py
+    inputs: [prices_df, scored_df]
+    outputs: [reaction_df]
+  - id: C1
+    type: python
+    file: Development/C1_gdelt.py
+    outputs: [events_df]
+  - id: C2
+    type: python
+    file: Development/C2_enricher.py
+    inputs: [events_df]
+    outputs: [enriched_df]
+  - id: D1
+    type: python
+    file: Development/D1_polymarket.py
+    outputs: [polymarket_df]
+  - id: D2
+    type: python
+    file: Development/D2_kalshi.py
+    outputs: [kalshi_df]
+  - id: D3
+    type: python
+    file: Development/D3_markets.py
+    inputs: [polymarket_df, kalshi_df]
+    outputs: [markets_df]
+  - id: E1
+    type: python
+    file: Development/E1_fred.py
+    outputs: [fred_df]
+  - id: E2
+    type: python
+    file: Development/E2_macro.py
+    inputs: [fred_df]
+    outputs: [macro_df]
+  - id: F
+    type: python
+    file: Development/F_backtest.py
+    inputs: [macro_df, prices_df]
+    outputs: [backtest_df]
+  - id: G1
+    type: python
+    file: Development/G1_escalation.py
+    inputs: [scored_df, markets_df, events_df, fred_df]
+    outputs: [escalation_df]
+  - id: G2
+    type: python
+    file: Development/G2_master.py
+    inputs: [escalation_df, reaction_df, backtest_df, enriched_df]
+    outputs: [master_df]

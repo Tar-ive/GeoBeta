@@ -1,0 +1,43 @@
+{
+  "name": "GeoBeta",
+  "version": "1.0.0",
+  "description": "Geopolitical Risk Intelligence - S&P 500 tariff exposure analysis",
+  "repo_path": "/repo/GeoBeta",
+  "canvas_file": "canvas.yaml",
+  "development_folder": "Development",
+  "blocks": [
+    {"id": "A1", "name": "tickers", "file": "Development/A1_tickers.py", "layer": "development", "inputs": [], "outputs": ["tickers_df"]},
+    {"id": "A2", "name": "edgar", "file": "Development/A2_edgar.py", "layer": "development", "inputs": ["tickers_df"], "outputs": ["raw_filings_df"]},
+    {"id": "A3", "name": "chunker", "file": "Development/A3_chunker.py", "layer": "development", "inputs": ["raw_filings_df"], "outputs": ["filtered_chunks_df"]},
+    {"id": "A4", "name": "extractor", "file": "Development/A4_extractor.py", "layer": "development", "inputs": ["filtered_chunks_df"], "outputs": ["extracted_df"], "type": "genai"},
+    {"id": "A5", "name": "scorer", "file": "Development/A5_scorer.py", "layer": "development", "inputs": ["filtered_chunks_df", "extracted_df"], "outputs": ["scored_df"]},
+    {"id": "B1", "name": "prices", "file": "Development/B1_prices.py", "layer": "development", "inputs": ["tickers_df"], "outputs": ["prices_df"]},
+    {"id": "B3", "name": "reaction", "file": "Development/B3_reaction.py", "layer": "development", "inputs": ["prices_df", "scored_df"], "outputs": ["reaction_df"]},
+    {"id": "C1", "name": "gdelt", "file": "Development/C1_gdelt.py", "layer": "development", "inputs": [], "outputs": ["events_df"]},
+    {"id": "C2", "name": "enricher", "file": "Development/C2_enricher.py", "layer": "development", "inputs": ["events_df"], "outputs": ["enriched_df"]},
+    {"id": "D1", "name": "polymarket", "file": "Development/D1_polymarket.py", "layer": "development", "inputs": [], "outputs": ["polymarket_df"]},
+    {"id": "D2", "name": "kalshi", "file": "Development/D2_kalshi.py", "layer": "development", "inputs": [], "outputs": ["kalshi_df"]},
+    {"id": "D3", "name": "markets", "file": "Development/D3_markets.py", "layer": "development", "inputs": ["polymarket_df", "kalshi_df"], "outputs": ["markets_df"]},
+    {"id": "E1", "name": "fred", "file": "Development/E1_fred.py", "layer": "development", "inputs": [], "outputs": ["fred_df"]},
+    {"id": "E2", "name": "macro", "file": "Development/E2_macro.py", "layer": "development", "inputs": ["fred_df"], "outputs": ["macro_df"]},
+    {"id": "F", "name": "backtest", "file": "Development/F_backtest.py", "layer": "development", "inputs": ["macro_df", "prices_df"], "outputs": ["backtest_df"]},
+    {"id": "G1", "name": "escalation", "file": "Development/G1_escalation.py", "layer": "development", "inputs": ["scored_df", "markets_df", "events_df", "fred_df"], "outputs": ["escalation_df"]},
+    {"id": "G2", "name": "master", "file": "Development/G2_master.py", "layer": "development", "inputs": ["escalation_df", "reaction_df", "backtest_df", "enriched_df"], "outputs": ["master_df"]}
+  ],
+  "pipelines": {
+    "edgar": ["A1", "A2", "A3", "A4", "A5"],
+    "prices": ["A1", "B1", "B3"],
+    "events": ["C1", "C2"],
+    "markets": ["D1", "D2", "D3"],
+    "macro": ["E1", "E2"],
+    "backtest": ["F"],
+    "escalation": ["G1", "G2"]
+  },
+  "secrets": [
+    {"name": "NEON_DATABASE_URL", "description": "PostgreSQL connection string for Neon DB"},
+    {"name": "ALPHA_VANTAGE_API_KEY", "description": "Alpha Vantage API key for stock prices"},
+    {"name": "FRED_API_KEY", "description": "FRED API key for macro data"},
+    {"name": "KALSHI_API_KEY", "description": "Kalshi API key for prediction markets"},
+    {"name": "ANTHROPIC_API_KEY", "description": "Anthropic API key for GenAI extraction"}
+  ]
+}
