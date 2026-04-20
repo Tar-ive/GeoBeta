@@ -1,0 +1,62 @@
+id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+name: GeoBeta-2
+project_id: 2536eee7-9e24-45dc-83a8-e249ed961fe3
+global_imports: []
+python_global_imports: ''
+r_global_imports: ''
+requirements: []
+linux_packages: []
+environment_variables: []
+is_public: false
+organization_id: a6f6421d-8865-4fe7-aa81-1fc2b3352de7
+layers:
+- blocks:
+  - auto_size: false
+    canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    compute_settings: null
+    description: Loads the Neon Database configuration asset and inspects its structure
+      by displaying keys and contents for verification.
+    height: 1000
+    id: 128b7c07-695e-4100-b333-4c3a20749478
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    name: load_neon_config
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 0
+    y: 0
+  - auto_size: false
+    canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    compute_settings: null
+    description: Connects to a Neon PostgreSQL database and retrieves a catalog of
+      all schemas and tables, excluding system schemas. Displays results in a human-readable
+      format.
+    height: 1000
+    id: a440c292-7ab9-4974-aab2-517b298dfc23
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    name: neon_db_schema_explorer
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 0
+    y: 500
+  canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+  edges:
+  - canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    id: e0fd5afe-98e2-468c-a274-92ee515016aa
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    source: 128b7c07-695e-4100-b333-4c3a20749478
+    target: a440c292-7ab9-4974-aab2-517b298dfc23
+  id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+  name: Development
+  type: 1
+assets:
+- id: 34f4c2f5-4c48-4f45-8977-c96f6d313246
+  name: Neon_Database
+  type: connection
