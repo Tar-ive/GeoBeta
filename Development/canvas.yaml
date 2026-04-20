@@ -15,6 +15,7 @@ layers:
     canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
     compute_settings: null
     description: Produces the master list of S&P 500 tickers to process
+    file: Development/A1_tickers.py
     height: 200
     id: a1-tickers
     layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
@@ -30,6 +31,7 @@ layers:
   - auto_size: false
     canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
     compute_settings: null
+    file: Development/A2_edgar.py
     description: Fetches SEC EDGAR filings for each ticker
     height: 300
     id: a2-edgar
@@ -46,6 +48,7 @@ layers:
   - auto_size: false
     canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
     compute_settings: null
+    file: Development/A3_chunker.py
     description: Chunks filing text for NLP processing
     height: 300
     id: a3-chunker
@@ -62,6 +65,7 @@ layers:
   - auto_size: false
     canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
     compute_settings: null
+    file: Development/A4_extractor.py
     description: GenAI extraction of supply chain signals from filings
     height: 300
     id: a4-extractor
@@ -78,6 +82,7 @@ layers:
   - auto_size: false
     canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
     compute_settings: null
+    file: Development/A5_scorer.py
     description: Scores companies by tariff exposure level
     height: 300
     id: a5-scorer
@@ -94,6 +99,7 @@ layers:
   - auto_size: false
     canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
     compute_settings: null
+    file: Development/B1_prices.py
     description: Fetches stock prices from Alpha Vantage
     height: 300
     id: b1-prices
@@ -110,6 +116,7 @@ layers:
   - auto_size: false
     canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
     compute_settings: null
+    file: Development/B3_reaction.py
     description: Calculates market reaction to exposure signals
     height: 300
     id: b3-reaction
@@ -126,6 +133,7 @@ layers:
   - auto_size: false
     canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
     compute_settings: null
+    file: Development/C1_gdelt.py
     description: Polls GDELT for geopolitical events
     height: 300
     id: c1-gdelt
@@ -142,6 +150,7 @@ layers:
   - auto_size: false
     canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
     compute_settings: null
+    file: Development/C2_enricher.py
     description: Enriches GDELT events with tone and country risk
     height: 300
     id: c2-enricher
@@ -158,6 +167,7 @@ layers:
   - auto_size: false
     canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
     compute_settings: null
+    file: Development/D1_polymarket.py
     description: Fetches Polymarket prediction market odds
     height: 200
     id: d1-polymarket
@@ -174,6 +184,7 @@ layers:
   - auto_size: false
     canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
     compute_settings: null
+    file: Development/D2_kalshi.py
     description: Fetches Kalshi prediction market odds
     height: 200
     id: d2-kalshi
@@ -190,6 +201,7 @@ layers:
   - auto_size: false
     canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
     compute_settings: null
+    file: Development/D3_markets.py
     description: Aggregates prediction market data
     height: 200
     id: d3-markets
@@ -206,6 +218,7 @@ layers:
   - auto_size: false
     canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
     compute_settings: null
+    file: Development/E1_fred.py
     description: Fetches FRED macro indicators
     height: 200
     id: e1-fred
@@ -222,6 +235,7 @@ layers:
   - auto_size: false
     canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
     compute_settings: null
+    file: Development/E2_macro.py
     description: Computes composite macro signals
     height: 200
     id: e2-macro
@@ -238,6 +252,7 @@ layers:
   - auto_size: false
     canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
     compute_settings: null
+    file: Development/F_backtest.py
     description: Backtests strategy against historical events
     height: 300
     id: f-backtest
@@ -254,6 +269,7 @@ layers:
   - auto_size: false
     canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
     compute_settings: null
+    file: Development/G1_escalation.py
     description: Computes geopolitical escalation index
     height: 300
     id: g1-escalation
@@ -270,6 +286,7 @@ layers:
   - auto_size: false
     canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
     compute_settings: null
+    file: Development/G2_master.py
     description: Master output combining all signals
     height: 300
     id: g2-master
