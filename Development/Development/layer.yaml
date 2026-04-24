@@ -7,7 +7,7 @@ blocks:
   canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
   compute_settings: null
   description: Produces the master list of S&P 500 tickers to process
-  file: Development/A1_tickers.py
+  file: A1_tickers.py
   height: 200
   id: a1-tickers
   layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
@@ -24,7 +24,7 @@ blocks:
   canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
   compute_settings: null
   description: Fetches SEC EDGAR filings for each ticker
-  file: Development/A2_edgar.py
+  file: A2_edgar.py
   height: 300
   id: a2-edgar
   layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
@@ -41,7 +41,7 @@ blocks:
   canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
   compute_settings: null
   description: Chunks filing text for NLP processing
-  file: Development/A3_chunker.py
+  file: A3_chunker.py
   height: 300
   id: a3-chunker
   layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
@@ -58,7 +58,7 @@ blocks:
   canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
   compute_settings: null
   description: GenAI extraction of supply chain signals from filings
-  file: Development/A4_extractor.py
+  file: A4_extractor.py
   height: 300
   id: a4-extractor
   layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
@@ -75,7 +75,7 @@ blocks:
   canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
   compute_settings: null
   description: Scores companies by tariff exposure level
-  file: Development/A5_scorer.py
+  file: A5_scorer.py
   height: 300
   id: a5-scorer
   layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
@@ -92,7 +92,7 @@ blocks:
   canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
   compute_settings: null
   description: Fetches stock prices from Alpha Vantage
-  file: Development/B1_prices.py
+  file: B1_prices.py
   height: 300
   id: b1-prices
   layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
@@ -109,7 +109,7 @@ blocks:
   canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
   compute_settings: null
   description: Calculates market reaction to exposure signals
-  file: Development/B3_reaction.py
+  file: B3_reaction.py
   height: 300
   id: b3-reaction
   layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
@@ -126,7 +126,7 @@ blocks:
   canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
   compute_settings: null
   description: Polls GDELT for geopolitical events
-  file: Development/C1_gdelt.py
+  file: C1_gdelt.py
   height: 300
   id: c1-gdelt
   layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
@@ -143,7 +143,7 @@ blocks:
   canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
   compute_settings: null
   description: Enriches GDELT events with tone and country risk
-  file: Development/C2_enricher.py
+  file: C2_enricher.py
   height: 300
   id: c2-enricher
   layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
@@ -160,7 +160,7 @@ blocks:
   canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
   compute_settings: null
   description: Fetches Polymarket prediction market odds
-  file: Development/D1_polymarket.py
+  file: D1_polymarket.py
   height: 200
   id: d1-polymarket
   layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
@@ -177,7 +177,7 @@ blocks:
   canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
   compute_settings: null
   description: Fetches Kalshi prediction market odds
-  file: Development/D2_kalshi.py
+  file: D2_kalshi.py
   height: 200
   id: d2-kalshi
   layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
@@ -194,7 +194,7 @@ blocks:
   canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
   compute_settings: null
   description: Aggregates prediction market data
-  file: Development/D3_markets.py
+  file: D3_markets.py
   height: 200
   id: d3-markets
   layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
@@ -211,7 +211,7 @@ blocks:
   canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
   compute_settings: null
   description: Fetches FRED macro indicators
-  file: Development/E1_fred.py
+  file: E1_fred.py
   height: 200
   id: e1-fred
   layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
@@ -228,7 +228,7 @@ blocks:
   canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
   compute_settings: null
   description: Computes composite macro signals
-  file: Development/E2_macro.py
+  file: E2_macro.py
   height: 200
   id: e2-macro
   layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
@@ -245,7 +245,7 @@ blocks:
   canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
   compute_settings: null
   description: Backtests strategy against historical events
-  file: Development/F_backtest.py
+  file: F_backtest.py
   height: 300
   id: f-backtest
   layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
@@ -262,7 +262,7 @@ blocks:
   canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
   compute_settings: null
   description: Computes geopolitical escalation index
-  file: Development/G1_escalation.py
+  file: G1_escalation.py
   height: 300
   id: g1-escalation
   layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
@@ -279,7 +279,7 @@ blocks:
   canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
   compute_settings: null
   description: Master output combining all signals
-  file: Development/G2_master.py
+  file: G2_master.py
   height: 300
   id: g2-master
   layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe

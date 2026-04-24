@@ -1,144 +1,396 @@
-canvas:
-  id: geoabeta-canvas
-  name: GeoBeta
-  description: Geopolitical Risk Intelligence - S&P 500 tariff exposure analysis
-
+id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+name: GeoBeta
+project_id: 2536eee7-9e24-45dc-83a8-e249ed961fe3
 global_imports: []
-
+python_global_imports: ''
+r_global_imports: ''
+requirements: []
+linux_packages: []
+environment_variables: []
+is_public: false
+organization_id: a6f6421d-8865-4fe7-aa81-1fc2b3352de7
 layers:
-  - id: development
-    name: Development
-    compute_type: standard
-    memory: 4gb
-
-edges:
-  # Pipeline A: EDGAR + Exposure Scoring
-  - from: A1
-    to: A2
-  - from: A2
-    to: A3
-  - from: A3
-    to: A4
-  - from: A4
-    to: A5
-
-  # Pipeline B: Stock Prices
-  - from: A1
-    to: B1
-  - from: B1
-    to: B3
-
-  # Pipeline C: GDELT Events
-  - from: C1
-    to: C2
-
-  # Pipeline D: Prediction Markets
-  - from: D1
-    to: D3
-  - from: D2
-    to: D3
-
-  # Pipeline E: FRED Macro
-  - from: E1
-    to: E2
-
-  # Pipeline F: Backtest
-  - from: E2
-    to: F
-  - from: B1
-    to: F
-
-  # Pipeline G: Escalation Index
-  - from: A5
-    to: G1
-  - from: D3
-    to: G1
-  - from: C1
-    to: G1
-  - from: E1
-    to: G1
-  - from: G1
-    to: G2
-
-blocks:
-  - id: A1
-    type: python
+- blocks:
+  - auto_size: false
+    canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    compute_settings: null
+    description: Produces the master list of S&P 500 tickers to process
     file: Development/A1_tickers.py
-    outputs: [tickers_df]
-  - id: A2
-    type: python
+    height: 200
+    id: a1-tickers
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    name: A1_tickers
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 400
+    x: 0
+    y: 0
+  - auto_size: false
+    canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    compute_settings: null
+    description: Fetches SEC EDGAR filings for each ticker
     file: Development/A2_edgar.py
-    inputs: [tickers_df]
-    outputs: [raw_filings_df]
-  - id: A3
-    type: python
+    height: 300
+    id: a2-edgar
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    name: A2_edgar
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 400
+    x: 450
+    y: 0
+  - auto_size: false
+    canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    compute_settings: null
+    description: Chunks filing text for NLP processing
     file: Development/A3_chunker.py
-    inputs: [raw_filings_df]
-    outputs: [filtered_chunks_df]
-  - id: A4
-    type: genai
+    height: 300
+    id: a3-chunker
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    name: A3_chunker
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 400
+    x: 900
+    y: 0
+  - auto_size: false
+    canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    compute_settings: null
+    description: GenAI extraction of supply chain signals from filings
     file: Development/A4_extractor.py
-    inputs: [filtered_chunks_df]
-    outputs: [extracted_df]
-    model: claude-sonnet-4-6
-  - id: A5
-    type: python
+    height: 300
+    id: a4-extractor
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    name: A4_extractor
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 3
+    variables: null
+    width: 400
+    x: 1350
+    y: 0
+  - auto_size: false
+    canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    compute_settings: null
+    description: Scores companies by tariff exposure level
     file: Development/A5_scorer.py
-    inputs: [filtered_chunks_df, extracted_df]
-    outputs: [scored_df]
-  - id: B1
-    type: python
+    height: 300
+    id: a5-scorer
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    name: A5_scorer
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 400
+    x: 1800
+    y: 0
+  - auto_size: false
+    canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    compute_settings: null
+    description: Fetches stock prices from Alpha Vantage
     file: Development/B1_prices.py
-    inputs: [tickers_df]
-    outputs: [prices_df]
-  - id: B3
-    type: python
+    height: 300
+    id: b1-prices
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    name: B1_prices
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 400
+    x: 450
+    y: 400
+  - auto_size: false
+    canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    compute_settings: null
+    description: Calculates market reaction to exposure signals
     file: Development/B3_reaction.py
-    inputs: [prices_df, scored_df]
-    outputs: [reaction_df]
-  - id: C1
-    type: python
+    height: 300
+    id: b3-reaction
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    name: B3_reaction
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 400
+    x: 900
+    y: 400
+  - auto_size: false
+    canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    compute_settings: null
+    description: Polls GDELT for geopolitical events
     file: Development/C1_gdelt.py
-    outputs: [events_df]
-  - id: C2
-    type: python
+    height: 300
+    id: c1-gdelt
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    name: C1_gdelt
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 400
+    x: 0
+    y: 800
+  - auto_size: false
+    canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    compute_settings: null
+    description: Enriches GDELT events with tone and country risk
     file: Development/C2_enricher.py
-    inputs: [events_df]
-    outputs: [enriched_df]
-  - id: D1
-    type: python
+    height: 300
+    id: c2-enricher
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    name: C2_enricher
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 400
+    x: 450
+    y: 800
+  - auto_size: false
+    canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    compute_settings: null
+    description: Fetches Polymarket prediction market odds
     file: Development/D1_polymarket.py
-    outputs: [polymarket_df]
-  - id: D2
-    type: python
+    height: 200
+    id: d1-polymarket
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    name: D1_polymarket
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 400
+    x: 900
+    y: 800
+  - auto_size: false
+    canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    compute_settings: null
+    description: Fetches Kalshi prediction market odds
     file: Development/D2_kalshi.py
-    outputs: [kalshi_df]
-  - id: D3
-    type: python
+    height: 200
+    id: d2-kalshi
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    name: D2_kalshi
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 400
+    x: 1350
+    y: 800
+  - auto_size: false
+    canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    compute_settings: null
+    description: Aggregates prediction market data
     file: Development/D3_markets.py
-    inputs: [polymarket_df, kalshi_df]
-    outputs: [markets_df]
-  - id: E1
-    type: python
+    height: 200
+    id: d3-markets
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    name: D3_markets
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 400
+    x: 1800
+    y: 800
+  - auto_size: false
+    canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    compute_settings: null
+    description: Fetches FRED macro indicators
     file: Development/E1_fred.py
-    outputs: [fred_df]
-  - id: E2
-    type: python
+    height: 200
+    id: e1-fred
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    name: E1_fred
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 400
+    x: 0
+    y: 1200
+  - auto_size: false
+    canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    compute_settings: null
+    description: Computes composite macro signals
     file: Development/E2_macro.py
-    inputs: [fred_df]
-    outputs: [macro_df]
-  - id: F
-    type: python
+    height: 200
+    id: e2-macro
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    name: E2_macro
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 400
+    x: 450
+    y: 1200
+  - auto_size: false
+    canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    compute_settings: null
+    description: Backtests strategy against historical events
     file: Development/F_backtest.py
-    inputs: [macro_df, prices_df]
-    outputs: [backtest_df]
-  - id: G1
-    type: python
+    height: 300
+    id: f-backtest
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    name: F_backtest
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 400
+    x: 900
+    y: 1200
+  - auto_size: false
+    canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    compute_settings: null
+    description: Computes geopolitical escalation index
     file: Development/G1_escalation.py
-    inputs: [scored_df, markets_df, events_df, fred_df]
-    outputs: [escalation_df]
-  - id: G2
-    type: python
+    height: 300
+    id: g1-escalation
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    name: G1_escalation
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 400
+    x: 1350
+    y: 1200
+  - auto_size: false
+    canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    compute_settings: null
+    description: Master output combining all signals
     file: Development/G2_master.py
-    inputs: [escalation_df, reaction_df, backtest_df, enriched_df]
-    outputs: [master_df]
+    height: 300
+    id: g2-master
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    name: G2_master
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 400
+    x: 1800
+    y: 1200
+  canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+  edges:
+  - canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    id: edge-a1-a2
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    source: a1-tickers
+    target: a2-edgar
+  - canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    id: edge-a2-a3
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    source: a2-edgar
+    target: a3-chunker
+  - canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    id: edge-a3-a4
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    source: a3-chunker
+    target: a4-extractor
+  - canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    id: edge-a4-a5
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    source: a4-extractor
+    target: a5-scorer
+  - canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    id: edge-a1-b1
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    source: a1-tickers
+    target: b1-prices
+  - canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    id: edge-b1-b3
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    source: b1-prices
+    target: b3-reaction
+  - canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    id: edge-c1-c2
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    source: c1-gdelt
+    target: c2-enricher
+  - canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    id: edge-d1-d3
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    source: d1-polymarket
+    target: d3-markets
+  - canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    id: edge-d2-d3
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    source: d2-kalshi
+    target: d3-markets
+  - canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    id: edge-e1-e2
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    source: e1-fred
+    target: e2-macro
+  - canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    id: edge-e2-f
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    source: e2-macro
+    target: f-backtest
+  - canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    id: edge-b1-f
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    source: b1-prices
+    target: f-backtest
+  - canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    id: edge-a5-g1
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    source: a5-scorer
+    target: g1-escalation
+  - canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    id: edge-d3-g1
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    source: d3-markets
+    target: g1-escalation
+  - canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    id: edge-c1-g1
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    source: c1-gdelt
+    target: g1-escalation
+  - canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    id: edge-e1-g1
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    source: e1-fred
+    target: g1-escalation
+  - canvas_id: 10ccf86e-3c49-471d-9d51-b846c1c8b12b
+    id: edge-g1-g2
+    layer_id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+    source: g1-escalation
+    target: g2-master
+  id: 3659bb7f-f96d-4c6d-bf0c-0ec024f50fbe
+  name: Development
+  type: 1
+assets:
+- id: 34f4c2f5-4c48-4f45-8977-c96f6d313246
+  name: Neon_Database
+  type: connection
